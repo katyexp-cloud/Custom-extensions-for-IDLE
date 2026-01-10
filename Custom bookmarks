@@ -1,0 +1,42 @@
+----> __init__:
+        text.bind("<F1>", self.jump_to_bookmark)
+
+----> Method:
+    def jump_to_bookmark(self, event=None):
+        import tkinter as tk
+        
+        content = self.text.get("1.0", "end-1c")
+        found_bookmarks = []
+        for i, line in enumerate(content.split('\n')):
+            if line.strip().startswith("# @"):
+                label = line.replace("# @", "").strip() or f"Line {i+1}"
+                found_bookmarks.append((label, i+1))
+
+        if not found_bookmarks:
+            print("No bookmarks found! Type '# @ Name' somewhere.")
+            return "break"
+
+        popup = tk.Toplevel(self.root)
+        popup.title("Bookmarks")
+        popup.attributes("-topmost", True)
+        popup.geometry("250x300")
+
+        lb = tk.Listbox(popup, font=("Segoe UI", 10))
+        lb.pack(expand=True, fill="both")
+
+        for label, line_num in found_bookmarks:
+            lb.insert("end", f"{line_num}: {label}")
+
+        def go_to_selected(event=None):
+            selection = lb.curselection()
+            if selection:
+                index = selection[0]
+                line_to_jump = found_bookmarks[index][1]
+                self.text.mark_set("insert", f"{line_to_jump}.0")
+                self.text.see(f"{line_to_jump}.0")
+                self.text.focus_set()
+
+        lb.bind("<Double-Button-1>", go_to_selected)
+        popup.bind("<Return>", go_to_selected)
+        
+        return "break"
