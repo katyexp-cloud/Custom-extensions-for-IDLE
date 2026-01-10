@@ -1,5 +1,5 @@
 # Custom-extensions-for-IDLE
-Custom extensions for IDLE. Yes.
+I have created my own compiler from scratch just to realize I could tweak the IDLE itself the whole time :D
 
 ## Custom Bookmarks
 - type # @ -your-custom-bookmark-
