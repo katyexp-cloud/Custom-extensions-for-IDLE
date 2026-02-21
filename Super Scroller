@@ -3,30 +3,41 @@ Windows:
 
         text.bind('<Control-MouseWheel>', self.superb_scroll)
         text.bind('<Shift-MouseWheel>', self.super_scroll)
-        self.text.bind("<MouseWheel>", self.slow_scroll)
+        self.text.bind("<MouseWheel>", self.smooth_scroll)
 
 Method:
+    def smooth_scroll(self, event):
+        shift = -(event.delta // 120) * 50 
+        self._animate_scroll(shift)
+        return "break"
+
+    def _animate_scroll(self, remaining):
+        if abs(remaining) > 1:
+            step = remaining * 0.2 
+            self.text.yview_scroll(int(step), "pixels")
+            self.text.after(10, lambda: self._animate_scroll(remaining - step))
+
     def superb_scroll(self, event):
         lines = 0
         if event.delta:
             lines = -(event.delta // 120) * 40 
-        
         self.text.yview_scroll(lines, "units")
-        return "break" 
+        return "break" # Prevent the default Shift+Scroll (which usually scrolls horizontally)
+
 
     def super_scroll(self, event):
         lines = 0
-        if event.delta:
+        if event.delta: # Windows/macOS
+            # Typically delta is 120 per notch; we want to jump about 10-20 lines
             lines = -(event.delta // 120) * 10 
-        
         self.text.yview_scroll(lines, "units")
-        return "break"
+        return "break" # Prevent the default Shift+Scroll (which usually scrolls horizontally)
 
+    # init: self.text.bind("<MouseWheel>", self.slow_scrol)
     def slow_scroll(self, event):
-        """Scrolls X lines per mouse wheel notch."""
         lines = 0
-        if event.delta:
-            lines = -(event.delta // 120) * 2 # X
-        
+        if event.delta: # Windows/macOS
+            # Divide by 120 to get 1 notch, then multiply by 1 line
+            lines = -(event.delta // 120) * 1 
         self.text.yview_scroll(lines, "units")
         return "break"
