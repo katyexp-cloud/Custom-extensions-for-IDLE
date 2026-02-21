@@ -1,22 +1,32 @@
 __init__
 Windows:
 
-text.bind('<Shift-MouseWheel>', self.super_scroll)
-
-or Linux
-
-text.bind('<Shift-Button-4>', self.super_scroll)
-text.bind('<Shift-Button-5>', self.super_scroll)
+        text.bind('<Control-MouseWheel>', self.superb_scroll)
+        text.bind('<Shift-MouseWheel>', self.super_scroll)
+        self.text.bind("<MouseWheel>", self.slow_scroll)
 
 Method:
+    def superb_scroll(self, event):
+        lines = 0
+        if event.delta:
+            lines = -(event.delta // 120) * 40 
+        
+        self.text.yview_scroll(lines, "units")
+        return "break" 
+
     def super_scroll(self, event):
         lines = 0
-        if event.delta: # Windows/macOS
-            lines = -(event.delta // 120) * 20 
-        elif event.num == 4: # Linux Up
-            lines = -20
-        elif event.num == 5: # Linux Down
-            lines = 20
+        if event.delta:
+            lines = -(event.delta // 120) * 10 
+        
+        self.text.yview_scroll(lines, "units")
+        return "break"
+
+    def slow_scroll(self, event):
+        """Scrolls X lines per mouse wheel notch."""
+        lines = 0
+        if event.delta:
+            lines = -(event.delta // 120) * 2 # X
         
         self.text.yview_scroll(lines, "units")
         return "break"
