@@ -5,6 +5,7 @@
 - hit F1 for Bookmarks tab
 - scroll to navigate / double click to jump on bookmark in IDLE
 - automatic reloading (1FPS)
+- window popup position & resolution memory
 
   <img width="800" height="287" alt="image" src="https://github.com/user-attachments/assets/b23376f7-6b35-4642-8a95-dfab99e24173" />
 
