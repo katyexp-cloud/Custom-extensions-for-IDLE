@@ -11,7 +11,7 @@
 
 
 ## Customized Scrolling
-- default speed => 5 line per notch + 60FPS smoothing
+- default speed => 5 line per notch + 60FPS smooth scrolling
 - press shift+scroll to fast scroll
 - press ctrl+scroll to superfast scroll
 - speeds editable in super_scroll/superb_scroll/slow_scroll defs
