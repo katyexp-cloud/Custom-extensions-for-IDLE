@@ -15,7 +15,6 @@ in editor.py:
         popup.attributes("-topmost", True)
         popup.geometry(self.bookmark_geo)
 
-        # Track current data to prevent flickering from constant redrawing
         self.last_bookmarks = []
 
         lb = tk.Listbox(popup, font=("Segoe UI", 10))
@@ -25,7 +24,6 @@ in editor.py:
             if not popup.winfo_exists():
                 return # Stop loop if window closed
 
-            # 1. Scan for bookmarks
             content = self.text.get("1.0", "end-1c")
             current_found = []
             for i, line in enumerate(content.split('\n')):
@@ -33,14 +31,12 @@ in editor.py:
                     label = line.replace("# @", "").strip() or f"Line {i+1}"
                     current_found.append((label, i+1))
 
-            # 2. Only update the UI if the data actually changed
             if current_found != self.last_bookmarks:
                 lb.delete(0, "end")
                 for label, line_num in current_found:
                     lb.insert("end", f"{line_num}: {label}")
                 self.last_bookmarks = current_found
 
-            # 3. Schedule next refresh (1000ms = 1 second)
             popup.after(1000, refresh_list)
 
         def go_to_selected(event=None):
@@ -52,14 +48,10 @@ in editor.py:
                 self.text.see(f"{line_to_jump}.0")
                 self.text.focus_set()
 
-        # Save position on move/resize
         popup.bind("<Configure>", lambda e: setattr(self, 'bookmark_geo', popup.geometry()))
         lb.bind("<Double-Button-1>", go_to_selected)
         popup.bind("<Return>", go_to_selected)
 
-        # Kick off the first refresh
         refresh_list()
-        
-        return "break"
         
         return "break"
