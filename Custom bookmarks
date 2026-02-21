@@ -22,7 +22,7 @@ in editor.py:
 
         def refresh_list():
             if not popup.winfo_exists():
-                return # Stop loop if window closed
+                return
 
             content = self.text.get("1.0", "end-1c")
             current_found = []
