@@ -1,6 +1,6 @@
-__init__
-Windows:
+editor.py:
 
+__init__
         text.bind('<Control-MouseWheel>', self.superb_scroll)
         text.bind('<Shift-MouseWheel>', self.super_scroll)
         self.text.bind("<MouseWheel>", self.handle_scroll)
