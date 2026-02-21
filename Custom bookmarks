@@ -1,3 +1,5 @@
+in editor.py:
+
 ----> __init__:
         text.bind("<F1>", self.jump_to_bookmark)
 
