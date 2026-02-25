@@ -6,7 +6,8 @@
 - scroll to navigate / double click to jump on bookmark in IDLE
 - automatic reloading (1FPS)
 - window popup position & resolution memory
-- hide when not hovered/used
+- hide (opacity 0.05) if not hovered/used
+- right-click and hold to move the popup window
 
  <img width="800" height="173" alt="image" src="https://github.com/user-attachments/assets/37a3ec1d-8753-42e6-9b6b-dd40f265f844" />
  <img width="800" height="168" alt="image" src="https://github.com/user-attachments/assets/5802fe63-ad9f-436e-9057-c1e5fa03339c" />
