@@ -1,0 +1,14 @@
+# if you don't mind loosing standard right-click (I never used it)
+
+in editor.py init:
+
+        def start_main_drag(event):
+            self.top._drag_x = event.x
+            self.top._drag_y = event.y
+        def do_main_drag(event):
+            x = self.top.winfo_x() + (event.x - self.top._drag_x)
+            y = self.top.winfo_y() + (event.y - self.top._drag_y)
+            self.top.geometry(f"+{x}+{y}")
+            
+        self.text.bind("<Button-3>", start_main_drag)
+        self.text.bind("<B3-Motion>", do_main_drag)
