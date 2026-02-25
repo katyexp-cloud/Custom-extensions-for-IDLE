@@ -8,7 +8,10 @@
 - window popup position & resolution memory
 - hide when not hovered/used
 
-  <img width="800" height="287" alt="image" src="https://github.com/user-attachments/assets/b23376f7-6b35-4642-8a95-dfab99e24173" />
+ <img width="800" height="173" alt="image" src="https://github.com/user-attachments/assets/37a3ec1d-8753-42e6-9b6b-dd40f265f844" />
+ <img width="800" height="168" alt="image" src="https://github.com/user-attachments/assets/5802fe63-ad9f-436e-9057-c1e5fa03339c" />
+
+
 
 
 ## Customized Scrolling
