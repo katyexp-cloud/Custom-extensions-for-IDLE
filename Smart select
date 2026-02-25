@@ -1,0 +1,59 @@
+in editor.py
+
+in init:
+
+    self.text.bind("<Control-Double-Button-1>", self.select_block_event)
+    self.text.bind("<Control-Triple-Button-1>", self.select_class_event)
+
+in main class:
+
+    def select_block_event(self, event):
+        return self._smart_select("def ")
+
+    def select_class_event(self, event):
+        return self._smart_select("class ")
+
+    def _smart_select(self, keyword):
+        insert_pos = self.text.index("insert")
+        line_num = int(insert_pos.split('.')[0])
+        
+        target_indent = 0 if keyword == "class " else None
+        
+        start_line = line_num
+        while start_line >= 1:
+            line_content = self.text.get(f"{start_line}.0", f"{start_line}.end")
+            
+            if line_content.strip().startswith(keyword):
+                if keyword == "class ":
+                    if not line_content.startswith((" ", "\t")):
+                        break
+                else:
+                    break # Found the 'def'
+            
+            if line_content.strip().startswith("# @") and start_line != line_num:
+                break
+            start_line -= 1
+
+        end_line = start_line + 1
+        total_lines = int(self.text.index("end-1c").split('.')[0])
+        while end_line <= total_lines:
+            line_content = self.text.get(f"{end_line}.0", f"{end_line}.end")
+            
+            if line_content.strip():
+                if not line_content.startswith((" ", "\t")):
+                    if line_content.startswith(("class ", "def ", "# @")):
+                        break
+                elif keyword == "def " and line_content.strip().startswith(("def ", "class ")):
+
+                    if not line_content.startswith("      "):
+                         break
+
+            end_line += 1
+
+        self.text.tag_remove("sel", "1.0", "end")
+        self.text.tag_add("sel", f"{start_line}.0", f"{end_line}.0")
+        
+        self.text.clipboard_clear()
+        self.text.clipboard_append(self.text.get(f"{start_line}.0", f"{end_line}.0"))
+        
+        return "break"
